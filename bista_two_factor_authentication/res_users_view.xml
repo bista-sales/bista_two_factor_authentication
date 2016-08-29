@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+      <!--    Users Form View Extended -->
+    <record model="ir.ui.view" id="res_users_inherit1">
+        <field name="name">res.users.inherit1</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+           <notebook position="inside">
+              <page string="Two Factor Authentication">
+                  <group>
+                      <field name="two_factor_authentication"/>
+                      <field name="secret_key"
+                             attrs="{'invisible':
+                             [('two_factor_authentication','=',False)],
+                             'required':
+                             [('two_factor_authentication','=',True)]}"/>
+                      <div>
+                          <button name="send_secret_key"
+                                  attrs="{'invisible':
+                                  [('two_factor_authentication', '=', False)]}"
+                                  string="Send Secret Key By Email"
+                                  type="object" />
+                      </div>
+                  </group>
+              </page>
+           </notebook>
+        </field>
+    </record>
+    </data>
+</openerp>

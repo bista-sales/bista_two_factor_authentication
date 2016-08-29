@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="email_qr_code" model="mail.template">
+            <field name="name">Send QR code</field>
+            <field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="subject"> Send QR Code</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="body_html">
+            <![CDATA[<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+            <p>A QR code has been generated for the Odoo account linked to this email.</p>
+
+            <p>Click on following link to scan the QR code into your Google authenticator app.</p>
+
+            <p> ${object.get_secret_key_url()} </p>
+
+            <p>Note: If you do not expect this, you can safely ignore this email.</p>
+            </div>]]>
+            </field>
+        </record>
+
+    </data>
+</openerp>

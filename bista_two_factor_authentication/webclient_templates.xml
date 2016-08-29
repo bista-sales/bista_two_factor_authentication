@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="two_fact_auth_assets_backend" name="two_fact_auth_web assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript">
+                odoo.define('web.csrf', function (require) {
+                    var token = "<t t-esc="request.csrf_token(None)"/>";
+                    require('web.core').csrf_token = token;
+                    require('qweb').default_dict.csrf_token = token;
+                });
+            </script>
+            </xpath>
+        </template>
+
+        <template id="web_security_code" name="two_factor_authentication">
+            <t t-call="web.login_layout">
+                <div style="margin-top: 20px;margin-bottom: 20px;">
+                    <form class="oe_login_form form-horizontal" role="form" t-attf-action="/web/authenticate_google{{ '?debug' if debug else '' }}">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="db">Enter Secret Code:</label>
+                            <div class="col-sm-6">
+                              <input type="password" class="form-control" name="gcode" required="required" autofocus="autofocus"/>
+                              <input type="hidden" name="uid" t-att-value="uid" />
+                            </div>
+                        </div>
+                        <p class="alert alert-danger" t-if="failure">
+                            <t t-esc="failure_message"/>
+                        </p>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-6">
+                             <button type="submit" name="verify_code" class="btn btn-primary">Submit</button> Or
+                             <a href="/web/login" >Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </t>
+        </template>
+    </data>
+</openerp>
+
+
